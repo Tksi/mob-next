@@ -4,16 +4,25 @@
 	import '@pqina/flip/dist/flip.min.css';
 	import { onDestroy, onMount } from 'svelte';
 
+	let passege = 'mob next';
+
 	const say = (str: string): void => {
 		const uttr = new SpeechSynthesisUtterance(str);
-		uttr.lang = 'en-US';
+
+		//strが英語か日本語か
+		if (/^[\d A-Za-z]+$/.test(str)) {
+			uttr.lang = 'en-US';
+		} else {
+			uttr.lang = 'jp-JP';
+		}
+
 		speechSynthesis.speak(uttr);
 	};
 
 	const calcRemainingTime = (remainingSec: number) => {
 		const [minTenPlace, minOnePlace] = String(Math.floor(remainingSec / 60)).padStart(2, '0');
 		const sec = remainingSec % 60;
-		const [SecTensPlace, SecOnesPlace] = String(sec).padStart(2, '0').split('');
+		const [SecTensPlace, SecOnesPlace] = [...String(sec).padStart(2, '0')];
 
 		return { min: [minTenPlace, minOnePlace], sec: [SecTensPlace, SecOnesPlace] };
 	};
@@ -32,7 +41,7 @@
 
 			if (remainingSec === 0) {
 				say('');
-				say('mob next');
+				say(passege);
 				remainingSec = minitues * 60;
 			} else {
 				remainingSec--;
@@ -44,6 +53,7 @@
 	let tickSecEle: HTMLDivElement;
 	let tickMin: { value: string[] };
 	let tickSec: { value: string[] };
+
 	onMount(() => {
 		tickMin = Tick.DOM.create(tickMinEle);
 		tickSec = Tick.DOM.create(tickSecEle);
@@ -75,16 +85,26 @@
 	</div>
 
 	<label class="inputContainer"
-		><input type="number" bind:value={minitues} min="1" max="99" />分</label
+		><input
+			type="number"
+			bind:value={minitues}
+			min="1"
+			max="99"
+			class="minitues"
+			disabled={!startButton}
+		/>min</label
 	>
 
 	{#if startButton}
-		<button
-			class="startButton"
-			on:click={() => {
-				countDown();
-			}}>Start</button
-		>
+		<div>
+			<input type="text" class="passage" bind:value={passege} />
+			<button
+				class="startButton"
+				on:click={() => {
+					countDown();
+				}}>Start</button
+			>
+		</div>
 	{/if}
 </div>
 
@@ -112,12 +132,25 @@
 		margin: 20px 0;
 	}
 
-	input {
+	.minitues {
 		width: 3.5rem;
+		text-align: right;
+	}
+
+	.passage {
+		width: 16rem;
+		text-align: center;
+	}
+
+	input {
 		font-size: 2rem;
 		border: none;
 		border-bottom: 2px solid #000;
-		text-align: right;
+	}
+
+	input:disabled {
+		background-color: inherit;
+		color: inherit;
 	}
 
 	.tick {
