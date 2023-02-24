@@ -134,7 +134,7 @@
 
 	.minitues {
 		width: 3.5rem;
-		text-align: right;
+		text-align: center;
 	}
 
 	.passage {
