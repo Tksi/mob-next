@@ -9,7 +9,9 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		'$/*': 'src/routes/*'
+		alias: {
+			'$/*': 'src/routes/*'
+		}
 	}
 };
 
