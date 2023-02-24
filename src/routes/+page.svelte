@@ -121,7 +121,7 @@
 	}
 
 	.tick {
-		font-size: min(5rem, 15dvw);
+		font-size: min(5rem, 13dvw);
 		display: inline-block;
 	}
 
