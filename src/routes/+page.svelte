@@ -31,7 +31,8 @@
 			tickSec.value = calcRemainingTime(remainingSec).sec;
 
 			if (remainingSec === 0) {
-				say('nextmob');
+				say('');
+				say('mob next');
 				remainingSec = minitues * 60;
 			} else {
 				remainingSec--;
@@ -120,7 +121,7 @@
 	}
 
 	.tick {
-		font-size: 5rem;
+		font-size: min(5rem, 15dvw);
 		display: inline-block;
 	}
 
