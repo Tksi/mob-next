@@ -33,6 +33,7 @@
 	let timerId: NodeJS.Timeout;
 
 	const countDown = () => {
+		say(passege);
 		startButton = false;
 		remainingSec = minitues * 60 - 1;
 		timerId = setInterval(() => {
