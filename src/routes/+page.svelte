@@ -33,6 +33,7 @@
 	let timerId: NodeJS.Timeout;
 
 	const countDown = () => {
+		navigator.wakeLock.request('screen').catch(console.warn);
 		say(passege);
 		startButton = false;
 		remainingSec = minitues * 60 - 1;
